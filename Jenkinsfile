@@ -7,7 +7,7 @@ pipeline {
                 
                 echo 'Pulling ... '
                 git branch: 'Bellalouna',
-                url : 'https://github.com/Bellalouna/AchatPojet.git'
+                url : 'https://github.com/Bellalouna/AchatProjet.git'
             }
         }
         
