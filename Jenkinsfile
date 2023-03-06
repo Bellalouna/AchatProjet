@@ -1,10 +1,5 @@
 pipeline {
     agent any
-    
-    environment {
-        GITHUB_TOKEN = credentials('jenkins')
-    }
-
 
     stages {
         stage('Checkout Git') {
