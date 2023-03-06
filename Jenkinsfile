@@ -29,10 +29,13 @@ pipeline {
                 sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.30:9000 -Dsonar.login=admin -Dsonar.password=123456789' 
             }
         }
+
         
-         stage('Deploy to Nexus') {
+        stage('Deploy to Nexus') {
             steps {
-                sh 'mvn deploy'
+                withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                    sh 'mvn deploy -Dmaven.deploy.skip=true -DaltDeploymentRepository=nexus::default::http://192.168.1.30:8081/repository/maven-central/deploymentRepo -DrepositoryId=nexus -Dusername=${NEXUS_USER} -Dpassword=${NEXUS_PASS}'
+                }
             }
         }
         
