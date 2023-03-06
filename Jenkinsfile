@@ -33,12 +33,7 @@ pipeline {
         
         stage('NEXUS'){
             steps{
-                sh 'mvn deploy -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true' // sh 'echo NEXUS' //
-            }
-        }
-        stage('Pull Jar From Nexus') {
-            steps {
-                sh "curl http://192.168.1.30:8081/repository/maven-releases/tn/esprit/rh/achat/1.0/achat-1.0.jar --output achat-1.0.jar";
+             sh 'mvn deploy -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true' // sh 'echo NEXUS' //
             }
         }
         
