@@ -22,6 +22,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Operateur implements Serializable{
+	public Operateur(String string, String string2, String string3) {
+		// TODO Auto-generated constructor stub
+	}
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
