@@ -31,9 +31,11 @@ pipeline {
         }
 
         
-        stage('NEXUS'){
+        stage('Nexus Deploy') {
             steps{
-             sh 'mvn deploy -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true' // sh 'echo NEXUS' //
+                withMaven(maven: 'Maven 3.8.3') {
+                    sh 'mvn deploy -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true'
+                }
             }
         }
         
