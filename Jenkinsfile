@@ -18,9 +18,9 @@ pipeline {
             }
         }
         
-        stage('mvn package project'){
+        stage('mvn compile project'){
             steps {
-                sh 'mvn package'
+                sh 'mvn compile'
             }
         }
         
