@@ -26,7 +26,7 @@ pipeline {
         
          stage('Test quality code with SONARQUBE'){
             steps {
-                echo "Welcome to SONARQUBE"
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.56.222:32768 -Dsonar.login=admin -Dsonar.password=ines'
             }
         }
 
