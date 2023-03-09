@@ -33,7 +33,7 @@ pipeline {
         
         stage('Deploy artifactory to Nexus registry') {
             steps{
-                withMaven(maven: 'Maven 3.0.5') {
+                withMaven(maven: 'Maven 3.8.3') {
                    echo 'Welcome Nexus'
                 }
             }
