@@ -48,10 +48,14 @@ pipeline {
             }
         }
 
-        
+         stage('mvn package project'){
+             steps {
+                  sh 'mvn package'
+             }
+         }
         stage('Deploy artifactory to Nexus registry') {
             steps{
-                withMaven(maven: 'Maven 3.0.5') {
+                withMaven(maven: 'Maven 3.8.6') {
                    sh 'mvn deploy -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true'
                 }
             }
