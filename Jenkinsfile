@@ -36,11 +36,11 @@ pipeline {
                      //               }
                        //         }
 
-          stage('mvn package project'){
-                     steps {
-                         sh 'mvn package'
-                     }
-                 }
+          //stage('mvn package project'){
+            //         steps {
+              //           sh 'mvn package'
+                //     }
+                 //}
 
          stage('Test quality code with SONARQUBE'){
             steps {
