@@ -23,7 +23,19 @@ pipeline {
                 sh 'mvn compile'
             }
         }
-        
+
+        stage('mvn Test project'){
+                    steps {
+                        sh 'mvn test'
+                    }
+                }
+
+        stage('mvn install project'){
+                    steps {
+                        sh 'mvn install'
+                    }
+                }
+
          stage('Test quality code with SONARQUBE'){
             steps {
                 sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.56.222:32768 -Dsonar.login=admin -Dsonar.password=ines'
