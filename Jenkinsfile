@@ -17,18 +17,19 @@ pipeline {
                 sh 'mvn clean'
             }
         }
+
+             stage('mvn Test project'){
+                            steps {
+                                sh 'mvn test'
+                            }
+                        }
+
         
         stage('mvn compile project'){
             steps {
                 sh 'mvn compile'
             }
         }
-
-        stage('mvn Test project'){
-                    steps {
-                        sh 'mvn test'
-                    }
-                }
 
         stage('mvn install project'){
                     steps {
@@ -45,7 +46,7 @@ pipeline {
         
         stage('Deploy artifactory to Nexus registry') {
             steps{
-                withMaven(maven: 'Maven 3.8.3') {
+                withMaven(maven: 'Maven 3.0.5') {
                    sh 'mvn deploy -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true'
                 }
             }
