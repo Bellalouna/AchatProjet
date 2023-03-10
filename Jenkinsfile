@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy artifactory to Nexus registry') {
             steps{
                 withMaven(maven: 'Maven 3.8.3') {
-                   echo 'Welcome Nexus'
+                   sh 'mvn deploy -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true'
                 }
             }
         }
