@@ -18,12 +18,11 @@ pipeline {
             }
         }
 
-             stage('mvn Test project'){
+           stage('mvn install project'){
                             steps {
-                                sh 'mvn test'
+                                sh 'mvn install'
                             }
                         }
-
         
         stage('mvn compile project'){
             steps {
@@ -31,11 +30,11 @@ pipeline {
             }
         }
 
-        stage('mvn install project'){
-                    steps {
-                        sh 'mvn install'
-                    }
-                }
+               stage('mvn Test project'){
+                                    steps {
+                                        sh 'mvn test'
+                                    }
+                                }
 
          stage('Test quality code with SONARQUBE'){
             steps {
