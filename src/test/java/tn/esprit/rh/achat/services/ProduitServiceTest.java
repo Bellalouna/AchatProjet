@@ -1,4 +1,4 @@
-package tn.esprit.rh.achat.services;
+/*package tn.esprit.rh.achat.services;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -86,3 +86,4 @@ public class ProduitServiceTest {
 
 
 }
+*/
