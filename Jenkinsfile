@@ -48,9 +48,9 @@ pipeline {
             }
         }
 
-         stage('mvn package project'){
+         stage('mvn install project'){
              steps {
-                  sh 'mvn package'
+                   sh 'mvn install -s /usr/share/maven/conf/settings.xml'
              }
          }
         stage('Deploy artifactory to Nexus registry') {
