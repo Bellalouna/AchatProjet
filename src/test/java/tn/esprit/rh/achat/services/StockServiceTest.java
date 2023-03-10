@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import tn.esprit.rh.achat.entities.Produit;
 import tn.esprit.rh.achat.entities.Stock;
 import tn.esprit.rh.achat.repositories.StockRepository;
 
@@ -31,12 +29,12 @@ public class StockServiceTest {
 	@Order(1)
 	@Test
 	public void testRetrieveAllStocks() {
-		List<Stock> lisStocks = ss.retrieveAllStocks();
-		Assertions.assertEquals(5, lisStocks.size());
+		List<Stock> listStocks = ss.retrieveAllStocks();
+		Assertions.assertEquals(5, listStocks.size());
 	}
 	
 	@Order(2)
-	//@Test
+	@Test
 	public void testAddStock() {
 		Stock expected = new Stock();
 		Stock result = ss.addStock(expected);
@@ -52,7 +50,7 @@ public class StockServiceTest {
 	}
 	
 	@Order(4)
-	//@Test
+	@Test
 	public void testDeleteStock() {
 		Long stockId = 12L;
 		ss.deleteStock(stockId);
@@ -80,6 +78,6 @@ public class StockServiceTest {
 	  when(stockRepository.retrieveStatusStock()).thenReturn(stocks);
 	  String result = ss.retrieveStatusStock();
 	  Assertions.assertNotNull(result);
-	}	
+	}
 
 }
