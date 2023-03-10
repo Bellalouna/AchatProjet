@@ -24,6 +24,12 @@ pipeline {
             }
         }
         
+        stage('MVN TEST'){
+            steps {
+                sh 'mvn test' 
+            }
+        }
+        
          stage('MVN SONARQUBE'){
             steps {
                 sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.30:9000 -Dsonar.login=admin -Dsonar.password=123456789' 
@@ -31,12 +37,21 @@ pipeline {
         }
 
         
-        stage('Deploy artifactory to Nexus registry') {
-            steps{
-                withMaven(maven: 'Maven 3.8.3') {
-                   echo 'Welcome Nexus'
-                }
+         stage('MVN INSTALL'){
+            steps {
+                sh 'mvn install -s /usr/share/maven/conf/settings.xml' 
             }
+        }
+        
+        
+        stage('NEXUS'){
+
+            steps{
+
+                sh 'mvn deploy '// -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true' // sh 'echo NEXUS' //
+                
+                }
+
         }
         
     }
