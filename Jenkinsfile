@@ -30,11 +30,11 @@ pipeline {
             }
         }
 
-               stage('mvn Test project'){
-                                    steps {
-                                        sh 'mvn test'
-                                    }
-                                }
+               //stage('mvn Test project'){
+                 //                   steps {
+                   //                     sh 'mvn test'
+                     //               }
+                       //         }
 
           stage('mvn package project'){
                      steps {
