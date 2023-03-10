@@ -24,6 +24,12 @@ pipeline {
             }
         }
         
+        stage('MVN TEST'){
+            steps {
+                sh 'mvn test' 
+            }
+        }
+        
          stage('MVN SONARQUBE'){
             steps {
                 sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.1.30:9000 -Dsonar.login=admin -Dsonar.password=123456789' 
