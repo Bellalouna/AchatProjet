@@ -47,8 +47,10 @@ public class Produit implements Serializable {
 	@ManyToOne
 	@JsonIgnore
 	private CategorieProduit categorieProduit;
-	
 
+	public Produit(String codeProduit, String libelleProduit, float prix) {
+		// TODO Auto-generated constructor stub
+	}
 
 	
 
