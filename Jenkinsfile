@@ -36,38 +36,21 @@ pipeline {
 				sh'mvn clean deploy -Dmaven.test.skip=true -Dresume=false'
 			      }
 		 } */
-		/*  stage('Docker Build and Push') {
+		 stage('Docker Build and Push') {
                        steps {
                                withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
          			  sh 'printenv'
-        			  sh 'docker build -t louay123/louaymed .'
-	 			  sh 'docker tag louay123/louaymed louay123/louaymed:latest'
-         			  sh 'docker push louay123/louaymed:latest'
+        			  sh 'docker build -t inesmensi/achatproject .'
+	 			  sh 'docker tag inesmensi/achatproject inesmensi/achatproject:latest'
+         			  sh 'docker push inesmensi/achatproject:latest'
          			}
      			  }
-    		}*/
-		 stage('Docker compose') {
+    		}
+		/* stage('Docker compose') {
       		      steps {
-         parallel(
-           "Docker compose": {
                sh 'docker-compose up '
-           },
-           "Delete running containers": {
-		       sh 'sleep 2m '
-               sh 'docker rm -f ci-spring ci-db'
-           }
-         )
-       }
-     }
-	}  
-			post {
-				success {
-
-					echo "passed"
-				}    
-			       failure {
-				       echo "failed"
+       				    }
 				
-		                }
+		               }*/
 		}
 }
