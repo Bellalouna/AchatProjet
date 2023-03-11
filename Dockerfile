@@ -1,11 +1,7 @@
-# Build a JAR File
-FROM maven:3.8.6 AS stage1
-WORKDIR /home/app
-COPY . /home/app/
-RUN mvn -f /home/app/pom.xml clean package
-
-# Create an Image
-FROM openjdk:8-alpine
+FROM adoptopenjdk/openjdk11:alpine-slim
 EXPOSE 8089
-COPY --from=stage1 /home/app/target/achat-1.0.jar achat-1.0.jar
-ENTRYPOINT ["sh", "-c", "java -jar /achat-1.0.jar"]
+ARG JAR_FILE=target/*.jar
+RUN addgroup -S pipeline && adduser -S k8s-pipeline -G pipeline
+COPY ${JAR_FILE} /home/k8s-pipeline/app.jar
+USER k8s-pipeline
+ENTRYPOINT ["java","-jar","/home/k8s-pipeline/app.jar"]
