@@ -77,7 +77,7 @@ pipeline {
         stage('DockerCompose') {
         
             steps {
-                sh 'cd /var/lib/jenkins/workspace/Pipeline_Projet_DevOps_2/'
+                
                 sh 'docker-compose up -d'
             }
                           
