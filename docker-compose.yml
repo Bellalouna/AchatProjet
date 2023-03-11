@@ -1,29 +1,37 @@
-version: "3"
-services:
-    backend:
-        image: achat-1.0:tag1
-        ports:
-            - "8089:8089"
-        restart: unless-stopped
-        container_name: spring
-        depends_on:
-            - sql_db
-        environment:
-            SPRING_DATASOURCE_URL: jdbc:mysql://sql_db:3306/tpachat?createDatabaseIfNotExist=true
-            SPRING_DATASOURCE_USERNAME: root
-            SPRING_DATASOURCE_PASSWORD: root
+version: "3.3"
 
-    sql_db:
-        image: mysql:8
-        container_name: sql_db
-        restart: unless-stopped
-        ports:
-            - "3306:3306"
-        environment:
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_DATABASE=tpachat
-        volumes:
-            - "db_volume:/var/lib/mysql"   
-            
-volumes:
-  db_volume: {}
+services:
+  mysqldb:
+    container_name: mysql
+    image: mysql:5.6
+    tty: true
+    privileged: true
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'achatdb'
+    ports:
+      - "3306:3306"
+    restart: on-failure
+    volumes:
+      - /home/mysql/data:/var/lib/mysql:rw
+
+
+  spring_app:
+    image: bellalounamarwa/achatproject:latest
+    container_name: achatproject
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/achatdb?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD:
+      MYSQL_DATABASE: achatdb
+    restart: on-failure
+    ports:
+      - "8089:8089"
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb
