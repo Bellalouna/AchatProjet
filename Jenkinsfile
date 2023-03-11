@@ -4,11 +4,11 @@ pipeline {
 
 	stages {
 		
-		/*stage('Junit + Mockito Test') {
+		stage('Junit + Mockito Test') {
 			steps {
 				sh 'mvn test'
 			      } 
-		}*/
+		}
 		stage('Build Artifact - Maven') {
 			steps {
 				sh "mvn clean package -DskipTests=true"
