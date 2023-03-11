@@ -1,7 +1,7 @@
 version: "3"
 services:
     backend:
-        image: achat-1.0
+        image: achat-1.0:tag1
         ports:
             - "8089:8089"
         restart: unless-stopped
@@ -14,7 +14,7 @@ services:
             SPRING_DATASOURCE_PASSWORD: root
 
     sql_db:
-        image: mysql
+        image: mysql:8
         container_name: sql_db
         restart: unless-stopped
         ports:
