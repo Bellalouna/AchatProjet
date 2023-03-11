@@ -1,65 +1,73 @@
 pipeline {
-    agent any
 
-    stages {
-        stage('Checkout Git Branch ') {
-            steps {
-                
-                echo 'Pulling For Ines Branch... '
-                git branch: 'Ines',
-                url : 'https://github.com/Bellalouna/AchatProjet.git'
-            }
-        }
-        
-        
-        stage('mvn clean project'){
-            steps {
-                sh 'mvn clean'
-            }
-        }
+	agent any
 
-          // stage('mvn install project'){
-            //                steps {
-              //                  sh 'mvn install'
-                //            }
-                  //      }
-        
-        stage('mvn compile project'){
-            steps {
-                sh 'mvn compile'
-            }
-        }
+	stages {
+		
+		/*stage('Junit + Mockito Test') {
+			steps {
+				sh 'mvn test'
+			      } 
+		}*/
+		stage('Build Artifact - Maven') {
+			steps {
+				sh "mvn clean package -DskipTests=true"
+				archive 'target/*.jar'
+			      }
+		}
+		       
+		stage('SonarQube + JacOcO Analysis') {
+			steps {
+				sh "mvn  sonar:sonar -Dsonar.projectKey=projet-ci  -Dsonar.host.url=http://192.168.33.10:9000  -Dsonar.login=faf5060f1fdac026b36edab0e340e8261b1a07cf"
 
-               //stage('mvn Test project'){
-                 //                   steps {
-                   //                     sh 'mvn test'
-                     //               }
-                       //         }
+			}
+		        post {
+				always {
 
-          //stage('mvn package project'){
-            //         steps {
-              //           sh 'mvn package'
-                //     }
-                 //}
+					jacoco execPattern: 'target/jacoco.exec'
 
-         stage('Test quality code with SONARQUBE'){
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.56.222:32768 -Dsonar.login=admin -Dsonar.password=ines'
-            }
-        }
+				       }    
+			    } 
 
-         stage('mvn install project'){
-             steps {
-                   sh 'mvn install -s /usr/share/maven/conf/settings.xml'
-             }
-         }
-        stage('Deploy artifactory to Nexus registry') {
-            steps{
-                withMaven(maven: 'Maven 3.8.6') {
-                   sh 'mvn deploy -DskipStaging=true -Dmaven.deploy.skip=false -Dmaven.test.skip=true'
-                }
-            }
-        }
-        
-    }
+		 }  
+		/* stage('Sonatype/Nexus deploy') {
+			steps {
+				//sh 'mvn clean deploy -DskipTests'
+				sh'mvn clean deploy -Dmaven.test.skip=true -Dresume=false'
+			      }
+		 } */
+		/*  stage('Docker Build and Push') {
+                       steps {
+                               withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
+         			  sh 'printenv'
+        			  sh 'docker build -t louay123/louaymed .'
+	 			  sh 'docker tag louay123/louaymed louay123/louaymed:latest'
+         			  sh 'docker push louay123/louaymed:latest'
+         			}
+     			  }
+    		}*/
+		 stage('Docker compose') {
+      		      steps {
+         parallel(
+           "Docker compose": {
+               sh 'docker-compose up '
+           },
+           "Delete running containers": {
+		       sh 'sleep 2m '
+               sh 'docker rm -f ci-spring ci-db'
+           }
+         )
+       }
+     }
+	}  
+			post {
+				success {
+
+					echo "passed"
+				}    
+			       failure {
+				       echo "failed"
+				
+		                }
+		}
 }
