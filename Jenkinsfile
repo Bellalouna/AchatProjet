@@ -54,17 +54,36 @@ pipeline {
 
         }
         
-        stage('Docker Build Image'){
-                steps
-                {
-                    script
-                    {
-                        sh 'docker build -t achat-1.0 .'
-                        sh 'docker build -t mysql .'
-                        
-                    }                   
-                }
+        stage('Docker build')
+        {
+            steps {
+                 sh 'docker build -t bellalounamarwa/achatproject .'
             }
+        }
+        
+                stage('Docker login')
+        {
+            steps {
+                sh 'echo $dockerhub_PSW | docker login -u bellalounamarwa -p 123456789'
+            }    
+       
+        }
+        stage('Push') {
+
+            steps {
+                sh 'docker push bellalounamarwa/achatproject'
+            }
+        }
+        stage('DockerCompose') {
+        
+            steps {
+                sh 'cd /var/lib/jenkins/workspace/Pipeline_Projet_DevOps_2/'
+                sh 'docker-compose up -d'
+            }
+                          
+        }
+        
+        
         
     }
 }
